@@ -4,6 +4,7 @@ const app = express();
 require('dotenv').config();
 const url = require('node:url');
 const router = require("./routes/authRoutes");
+const connectMongo = require('./utilities/db');
 
 const port = process.env.PORT || 5000;
 
@@ -29,4 +30,5 @@ app.all("*", (req, res, next, error) => {
 
 app.listen(port, (req, res) => {
     console.log(`Server running on port ${port}`);
+    connectMongo();
 });

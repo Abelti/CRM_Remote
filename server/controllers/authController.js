@@ -3,10 +3,10 @@ require("dotenv").config();
 const catchAsyncError = require("../middlewares/catchAsyncError")
 // const activationGenerator= require ("../utilities/activation");
 
-export const registerUser = catchAsyncError(
+const registerUser = catchAsyncError(
     async (req, res, next) => {
         const activationCode  = activationGenerator(user);
-        //code user registe
+        //code user register
         try {
             const { name, address, password, email} = req.body;
             const isEmailExist = await userModel.findOne({email});
@@ -32,7 +32,7 @@ export const registerUser = catchAsyncError(
     }
 );
 
-export const activateUser = catchAsyncError(
+const activateUser = catchAsyncError(
     async (req, res, next) => {
         try {
             const {activationCode} = req.body;
@@ -57,7 +57,9 @@ export const activateUser = catchAsyncError(
     }
 );
 
-export const activationGenerator = (user) => {
+const activationGenerator = (user) => {
     const activationCode = Math.floor(1000 * Math.random() * 9000).toString();
     return activationCode;
 }
+
+module.exports = { activationGenerator, activateUser, registerUser };
